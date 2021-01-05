@@ -6,14 +6,17 @@ typesTotal = 18;
 % 'Togekiss', 'Garchomp', 'Archeops', 'Hydreigon', 'Salamence', ...
 % 'Feraligatr', 'Walrein', 'Wailord', 'Seismitoad', 'Heatran'};
 
-prompt = 'Type name of who to substitute in: '
+prompt = 'Type name of who to substitute in: ';
 alternate = input(prompt, 's');
 
-prompt = 'Anyone else? (Leave blank if No)'
-str = input(prompt, 's')
-
-if isempty(str)
-else alternate = [alternate, input(prompt)]
+x = 0;
+while x == 0
+prompt = 'Anyone else? (Leave blank if No): ';
+str = input(prompt, 's');
+    if isempty(str)
+        x = 1;
+    else alternate = {alternate, str};
+    end
 end
    
 pokeMatrix = [];
@@ -29,7 +32,7 @@ maxEff = max(pokeMatrix(:,2));
 maxEff == pokeMatrix(:,2);
 
 
-n = sum(maxEff == pokeMatrix(:,2))
+n = sum(maxEff == pokeMatrix(:,2));
 sub = [];
 
 for i = 1:length(pokeMatrix)
@@ -41,7 +44,7 @@ end
 switch n
     case 1
         formatSpec = 'Substitute in %s with %s to be super effective against %i/%i types. \n';
-        fprintf(formatSpec, string(primaryTeam(n)), alternate, pokeMatrix(n,2), typesTotal);
+        fprintf(formatSpec, alternate, string(primaryTeam(n)), pokeMatrix(n,2), typesTotal);
     case 2
         formatSpec = 'Substitute in %s with %s or %s to be super effective against %i/%i types. \n';
         fprintf(formatSpec, alternate, string(primaryTeam(n-1)), string(primaryTeam(n)), pokeMatrix(i,2), typesTotal);
